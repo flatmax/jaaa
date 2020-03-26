@@ -87,6 +87,8 @@ Mainwin::Mainwin (X_window *parent, X_resman *xres, ITC_ctrl *audio) :
     _butt [PEAKH] = new X_tbutton (this, this, &Bst1, x, y, "Pk Hold", 0, PEAKH);
     y += Bst1.size.y;
     _butt [FREEZ] = new X_tbutton (this, this, &Bst1, x, y, "Freeze",  0, FREEZ);
+    y += Bst1.size.y;
+    _butt [NOD] = new X_tbutton (this, this, &Bst1, x, y, "No DC",  0, NOD);
     y += Bst1.size.y + 25;
 
     _butt [MCLR]  = new X_tbutton (this, this, &Bst1, x, y, "Clear", 0, MCLR);
@@ -339,6 +341,19 @@ void Mainwin::handle_callb (int k, X_window *W, _XEvent *E )
 		B->set_stat (2);
                 _spect->_bits |= Spectdata::FREEZE;
 	    }
+            break;
+
+        case NOD:
+            if (B->stat ())
+       	    {
+  		B->set_stat (0);
+                _spect->_bits &= ~Spectdata::NODC;
+  	    }
+            else
+       	    {
+  		B->set_stat (2);
+                _spect->_bits |= Spectdata::NODC;
+  	    }
             break;
 
         case MCLR:
@@ -1182,7 +1197,7 @@ void Mainwin::handle_mesg (ITC_mesg *M)
 
 void Mainwin::handle_trig ()
 {
-    int i, h, k;
+    int i, h, k, noDC=(_spect->_bits & Spectdata::NODC)!=0;
     float  a, b, p, s, *pow;
 
     k = ++_ipcnt * INP_LEN;
@@ -1233,6 +1248,9 @@ void Mainwin::handle_trig ()
             else   *pow = p;
             pow++;
 	    p = b * conv1 (_trbuf + 4 + i);
+        if (noDC && i==0)
+        ;
+        else
             s += p;
             if (k) *pow += a * (p - *pow);
 	    else if (h) { if (p > *pow) *pow = p; }

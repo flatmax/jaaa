@@ -46,7 +46,7 @@ class Spectdata
 {
 public:
 
-    enum { MK1_SET = 1, MK1_NSE = 2, MK2_SET = 4, MK2_NSE = 8, RESET = 16, PEAKH = 32, FREEZE = 64, YP_VAL = 256, YM_VAL = 512 };
+    enum { MK1_SET = 1, MK1_NSE = 2, MK2_SET = 4, MK2_NSE = 8, RESET = 16, PEAKH = 32, FREEZE = 64, NODC = 128, YP_VAL = 256, YM_VAL = 512 };
 
     Spectdata (int size)
     {
@@ -93,7 +93,7 @@ private:
     { 
         IP1, IP2, IP3, IP4,
         IP5, IP6, IP7, IP8,
-        BANDW, VIDAV, PEAKH, FREEZ,
+        BANDW, VIDAV, PEAKH, FREEZ, NOD,
         MCLR, MPEAK, MNSE,
         FMIN, FMAX, FCENT, FSPAN,
         AMAX, ASPAN,
