@@ -79,7 +79,7 @@ the averaging.
 'Freeze' freezes the analyser, but not the display, so you can still scroll and
 zoom or use the markers discussed below.
 
-'No DC' removes DC from the noise floor calculation
+'No DC' removes DC from the total power calculation
 
 Markers
 -------
